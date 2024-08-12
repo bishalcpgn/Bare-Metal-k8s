@@ -63,8 +63,7 @@ sudo systemctl enable --now containerd
 
 # Download the runc.amd64 binary using curl.
 # -L follows any redirects, and -O saves the file with its original name.
-curl -LO https://github.com/opencontainers/runc/releases/\
-download/v1.1.13/runc.amd64
+curl -LO https://github.com/opencontainers/runc/releases/download/v1.1.13/runc.amd64
 
 # Install the runc binary to /usr/local/sbin with the correct permissions.
 # -m 755 sets the permissions so that the owner can read, write, and execute,
@@ -103,20 +102,16 @@ wget https://github.com/kubernetes-sigs/cri-tools/releases/download/$VERSION/cri
 sudo tar zxvf crictl-$VERSION-linux-amd64.tar.gz -C /usr/local/bin
 rm -f crictl-$VERSION-linux-amd64.tar.gz
 
-cat <<EOF | sudo tee /etc/crictl.yaml
-runtime-endpoint: unix:///run/containerd/containerd.sock
-image-endpoint: unix:///run/containerd/containerd.sock
-timeout: 2
-debug: false
-pull-image-on-create: false
-EOF
 
 
 
 
 
 
-Kubeadm 
+
+
+
+#Kubeadm 
 
 
 sudo apt-get update
@@ -124,27 +119,27 @@ sudo apt-get install -y apt-transport-https ca-certificates curl gpg
 
 
 #  sudo mkdir -p -m 755 /etc/apt/keyrings
-curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key\
-| sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 
 # This overwrites any existing configuration
 # in /etc/apt/sources.list.d/kubernetes.list 
 
-echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] \
-https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /' \
-| sudo tee /etc/apt/sources.list.d/kubernetes.list
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
 
-# Update the package list to ensure that you are 
-# installing the latest versions
+
+
+#install kubeadm 
+
 sudo apt-get update
-
-# Install the kubelet, kubeadm, and kubectl packages
 sudo apt-get install -y kubelet kubeadm kubectl
-
-# Prevent the packages from being automatically updated
 sudo apt-mark hold kubelet kubeadm kubectl
+
+
+
+
+
+
 
 
 
