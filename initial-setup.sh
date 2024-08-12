@@ -22,8 +22,7 @@ sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
 
 
 # Download the specified version of containerd using curl a
-curl -LO https://github.com/containerd/containerd/releases/\
-download/v1.7.19/containerd-1.7.19-linux-amd64.tar.gz
+curl -LO https://github.com/containerd/containerd/releases/download/v1.7.19/containerd-1.7.19-linux-amd64.tar.gz
 
 
 # Extract the downloaded tar.gz archive to the /usr/local directory.
@@ -34,8 +33,7 @@ sudo tar -C /usr/local -xzvf containerd-1.7.19-linux-amd64.tar.gz
 
 # Download the containerd systemd service unit file using curl 
 # and save it as containerd.service.
-curl -LO https://raw.githubusercontent.com/containerd/containerd/main/\
-containerd.service
+curl -LO https://raw.githubusercontent.com/containerd/containerd/main/containerd.service
 
 
 # Create the directory for systemd service files if it doesn't exist.
@@ -91,7 +89,7 @@ sudo mkdir -p /opt/cni/bin
 
 # Installing CRI 
 
-VERSION="v1.31.0"
+VERSION="v1.26.0" # check latest version in /releases page
 wget https://github.com/kubernetes-sigs/cri-tools/releases/download/$VERSION/crictl-$VERSION-linux-amd64.tar.gz
 sudo tar zxvf crictl-$VERSION-linux-amd64.tar.gz -C /usr/local/bin
 rm -f crictl-$VERSION-linux-amd64.tar.gz
@@ -103,11 +101,6 @@ timeout: 2
 debug: false
 pull-image-on-create: false
 EOF
-
-
-
-
-
 
 
 
