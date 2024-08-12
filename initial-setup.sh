@@ -77,32 +77,32 @@ sudo install -m 755 runc.amd64 /usr/local/sbin/runc
 
 
 # Download the CNI plugins archive for Linux (amd64) using curl.
-curl -LO https://github.com/containernetworking/plugins/releases/download/v1.5.1/cni-plugins-linux-amd64-v1.5.1.tgz
-
+ curl -LO https://github.com/containernetworking/plugins/releases/download/v1.5.1/cni-plugins-linux-amd64-v1.5.1.tgz
 # Create the /opt/cni/bin directory if it doesn't already exist.
 # This is where the CNI plugins will be installed.
 sudo mkdir -p /opt/cni/bin
-
 # Extract the contents of the CNI plugins archive into the /opt/cni/bin directory.
 # The -C option changes the directory to /opt/cni/bin before extracting the files.
 # The options -xzvf are used to extract the gzip-compressed tar file, with verbose output to show the files being extracted.
-sudo tar -C /opt/cni/bin -xzvf cni-plugins-linux-amd64-v1.5.1.tgz
+ sudo tar -C /opt/cni/bin -xzvf cni-plugins-linux-amd64-v1.5.1.tgz
 
 
 
 
-
-
-
-
-
+# Installing CRI 
 
 VERSION="v1.31.0"
 wget https://github.com/kubernetes-sigs/cri-tools/releases/download/$VERSION/crictl-$VERSION-linux-amd64.tar.gz
 sudo tar zxvf crictl-$VERSION-linux-amd64.tar.gz -C /usr/local/bin
 rm -f crictl-$VERSION-linux-amd64.tar.gz
 
-
+cat <<EOF | sudo tee /etc/crictl.yaml
+runtime-endpoint: unix:///run/containerd/containerd.sock
+image-endpoint: unix:///run/containerd/containerd.sock
+timeout: 2
+debug: false
+pull-image-on-create: false
+EOF
 
 
 
